@@ -36,7 +36,7 @@ This project utilizes Amazon Web Services (AWS). You'll need AWS account on the 
 Set up a Postgres database using a Helm Chart.
 
     1. Set up Bitnami Repo
-        ```helm repo add <REPO_NAME> https://charts.bitnami.com/bitnami```
+        ```helm repo add bitnami-postgres https://charts.bitnami.com/bitnami```
 
     2. **Install PostgreSQL Helm Chart**
     ```helm install <SERVICE_NAME> <REPO_NAME>/postgresql```
