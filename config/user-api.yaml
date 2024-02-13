@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-api
+spec:
+  selector:
+    app.kubernetes.io/name: user-api
+  ports:
+  - name: "5152"
+    protocol: TCP
+    port: 5152
+    targetPort: 5152
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-api
+  labels:
+    name: user-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: user-api
+  template:
+    metadata:
+      labels:
+        service: user-api
+    spec:
+      containers:
+      - name: user-api
+        image: isjustintime/cd12355-user-api:0.1.0
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /health_check
+            port: 5152
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            path: "/readiness_check"
+            port: 5152
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        env:
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_PASSWORD
+        - name: DB_HOST
+          value: app-db
+      restartPolicy: Always
