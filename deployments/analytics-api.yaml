@@ -6,10 +6,10 @@ spec:
   selector:
     app.kubernetes.io/name: analytics-api
   ports:
-  - name: "5151"
+  - name: "5153"
     protocol: TCP
-    port: 5151
-    targetPort: 5151
+    port: 5153
+    targetPort: 5153
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,13 +34,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health_check
-            port: 5151
+            port: 5153
           initialDelaySeconds: 10
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: "/readiness_check"
-            port: 5151
+            port: 5153
           initialDelaySeconds: 10
           timeoutSeconds: 10
         env:

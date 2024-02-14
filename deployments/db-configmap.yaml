@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 data:
-  DB_USERNAME: "adminuser"
+  DB_USERNAME: "postgres"
   DB_NAME: "postgres"
   DB_HOST: "app-db-postgresql.default.svc.cluster.local"
   DB_PORT: "5432"
