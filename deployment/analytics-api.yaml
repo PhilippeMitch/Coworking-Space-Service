@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: analytics-api
-        image: isjustintime/cd12355-admin-api:0.1.0
+        image: 595725792689.dkr.ecr.us-east-1.amazonaws.com/coworking-space-service:0.0.1
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
