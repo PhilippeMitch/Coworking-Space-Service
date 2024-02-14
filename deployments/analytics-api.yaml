@@ -29,20 +29,20 @@ spec:
     spec:
       containers:
       - name: analytics-api
-        image: 595725792689.dkr.ecr.us-east-1.amazonaws.com/coworking-space-service:0.0.1
+        image: 595725792689.dkr.ecr.us-east-1.amazonaws.com/coworking-space-service:latest
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /health_check
             port: 5151
-          initialDelaySeconds: 5
-          timeoutSeconds: 2
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: "/readiness_check"
             port: 5151
-          initialDelaySeconds: 5
-          timeoutSeconds: 5
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
         env:
         - name: DB_USERNAME
           valueFrom:
@@ -54,6 +54,20 @@ spec:
             secretKeyRef:
               name: db-secret
               key: DB_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_NAME
         - name: DB_HOST
-          value: app-db
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_PORT
+        
       restartPolicy: Always
